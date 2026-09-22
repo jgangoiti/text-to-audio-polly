@@ -1,0 +1,122 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "TerraformStateBackend",
+      "Effect": "Allow",
+      "Action": ["s3:GetObject", "s3:PutObject", "s3:ListBucket"],
+      "Resource": [
+        "arn:aws:s3:::YOUR_TFSTATE_BUCKET",
+        "arn:aws:s3:::YOUR_TFSTATE_BUCKET/*"
+      ]
+    },
+    {
+      "Sid": "ProjectS3Buckets",
+      "Effect": "Allow",
+      "Action": [
+        "s3:CreateBucket",
+        "s3:DeleteBucket",
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:DeleteObject",
+        "s3:ListBucket",
+        "s3:PutBucketNotification",
+        "s3:GetBucketNotification",
+        "s3:PutBucketPolicy",
+        "s3:GetBucketPolicy",
+        "s3:PutLifecycleConfiguration",
+        "s3:PutBucketPublicAccessBlock",
+        "s3:GetBucketPublicAccessBlock",
+        "s3:PutEncryptionConfiguration",
+        "s3:GetEncryptionConfiguration"
+      ],
+      "Resource": [
+        "arn:aws:s3:::*text-to-audio*",
+        "arn:aws:s3:::*text-to-audio*/*"
+      ]
+    },
+    {
+      "Sid": "LambdaFull",
+      "Effect": "Allow",
+      "Action": [
+        "lambda:CreateFunction",
+        "lambda:DeleteFunction",
+        "lambda:GetFunction",
+        "lambda:UpdateFunctionCode",
+        "lambda:UpdateFunctionConfiguration",
+        "lambda:AddPermission",
+        "lambda:RemovePermission",
+        "lambda:GetPolicy",
+        "lambda:TagResource",
+        "lambda:ListVersionsByFunction"
+      ],
+      "Resource": "arn:aws:lambda:eu-west-1:YOUR_ACCOUNT_ID:function:text-to-audio-*"
+    },
+    {
+      "Sid": "IamForLambdaRoles",
+      "Effect": "Allow",
+      "Action": [
+        "iam:CreateRole",
+        "iam:DeleteRole",
+        "iam:GetRole",
+        "iam:PassRole",
+        "iam:AttachRolePolicy",
+        "iam:DetachRolePolicy",
+        "iam:PutRolePolicy",
+        "iam:DeleteRolePolicy",
+        "iam:GetRolePolicy",
+        "iam:ListRolePolicies",
+        "iam:ListAttachedRolePolicies",
+        "iam:TagRole"
+      ],
+      "Resource": "arn:aws:iam::TU_ACCOUNT_ID:role/text-to-audio-*"
+    },
+    {
+      "Sid": "Polly",
+      "Effect": "Allow",
+      "Action": [
+        "polly:StartSpeechSynthesisTask",
+        "polly:GetSpeechSynthesisTask",
+        "polly:SynthesizeSpeech",
+        "polly:DescribeVoices"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "Comprehend",
+      "Effect": "Allow",
+      "Action": ["comprehend:DetectDominantLanguage"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "Sns",
+      "Effect": "Allow",
+      "Action": [
+        "sns:CreateTopic",
+        "sns:DeleteTopic",
+        "sns:GetTopicAttributes",
+        "sns:SetTopicAttributes",
+        "sns:Subscribe",
+        "sns:Unsubscribe",
+        "sns:Publish",
+        "sns:ListSubscriptionsByTopic",
+        "sns:TagResource"
+      ],
+      "Resource": "arn:aws:sns:eu-west-1:YOUR_ACCOUNT_ID:text-to-audio-*"
+    },
+    {
+      "Sid": "CloudWatchLogs",
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:DeleteLogGroup",
+        "logs:PutRetentionPolicy",
+        "logs:DescribeLogGroups",
+        "logs:GetLogEvents",
+        "logs:FilterLogEvents",
+        "logs:TagResource"
+      ],
+      "Resource": "arn:aws:logs:eu-west-1:YOUR_ACCOUNT_ID:log-group:/aws/lambda/text-to-audio-*"
+    }
+  ]
+}
