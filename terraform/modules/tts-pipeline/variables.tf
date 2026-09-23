@@ -1,0 +1,9 @@
+variable "project_name"     { type = string }
+variable "aws_region"       { type = string }
+variable "account_id"       { type = string }
+variable "input_bucket_id"  { type = string }
+variable "input_bucket_arn" { type = string }
+variable "output_bucket_id" { type = string }
+variable "output_bucket_arn" { type = string }
+variable "polly_voice_id"   { type = string }
+variable "polly_engine"     { type = string }
