@@ -35,7 +35,10 @@ jobs:
 
       - name: Generar terraform.tfvars
         working-directory: ${{ env.TF_WORKING_DIR }}
-        run: echo "${{ secrets.TFVARS_CONTENT }}" > terraform.tfvars
+        run: |
+          cat << 'TFVARS_EOF' > terraform.tfvars
+          ${{ secrets.TFVARS_CONTENT }}
+          TFVARS_EOF
 
       - name: Terraform Init
         working-directory: ${{ env.TF_WORKING_DIR }}
@@ -89,7 +92,10 @@ jobs:
 
       - name: Generar terraform.tfvars
         working-directory: ${{ env.TF_WORKING_DIR }}
-        run: echo "${{ secrets.TFVARS_CONTENT }}" > terraform.tfvars
+        run: |
+          cat << 'TFVARS_EOF' > terraform.tfvars
+          ${{ secrets.TFVARS_CONTENT }}
+          TFVARS_EOF
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
