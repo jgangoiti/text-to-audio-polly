@@ -26,7 +26,7 @@ module "tts_pipeline" {
   polly_voice_id    = var.polly_voice_id
   polly_engine      = var.polly_engine
 }
-##prueba
+
 module "notifier" {
   source            = "../../modules/notifier"
   project_name      = var.project_name
@@ -38,8 +38,10 @@ module "notifier" {
 }
 
 module "github_oidc" {
-  source      = "../../modules/github-oidc"
-  github_org  = var.github_org
-  github_repo = var.github_repo
-  policy_arn  = local.iam_policy_arn
+  source          = "../../modules/github-oidc"
+  github_org      = var.github_org
+  github_repo     = var.github_repo
+  github_owner_id = var.github_owner_id
+  github_repo_id  = var.github_repo_id
+  policy_arn      = local.iam_policy_arn
 }

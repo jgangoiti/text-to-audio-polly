@@ -39,3 +39,11 @@ variable "github_repo" {
   description = "Nombre del repo en GitHub"
   type        = string
 }
+variable "github_owner_id" {
+  description = "ID numérico inmutable del owner del repo en GitHub"
+  type        = string
+}
+variable "github_repo_id" {
+  description = "ID numérico inmutable del repo en GitHub"
+  type        = string
+}
