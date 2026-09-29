@@ -42,7 +42,7 @@ jobs:
 
       - name: Terraform Init
         working-directory: ${{ env.TF_WORKING_DIR }}
-        run: terraform init
+        run: terraform init -backend-config="bucket=${{ secrets.TFSTATE_BUCKET_NAME }}"
 
       - name: Terraform Format Check
         working-directory: ${{ env.TF_WORKING_DIR }}
@@ -102,7 +102,7 @@ jobs:
 
       - name: Terraform Init
         working-directory: ${{ env.TF_WORKING_DIR }}
-        run: terraform init
+        run: terraform init -backend-config="bucket=${{ secrets.TFSTATE_BUCKET_NAME }}"
 
       - name: Terraform Apply
         working-directory: ${{ env.TF_WORKING_DIR }}

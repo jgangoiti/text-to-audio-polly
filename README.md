@@ -6,6 +6,14 @@
 
 ---
 
+## Demo
+
+![Demo](docs/demo.gif)
+
+<!-- TODO: grabar y enlazar aquí el GIF/vídeo de la demo -->
+
+---
+
 ## English
 
 ### Overview
@@ -94,6 +102,20 @@ terraform apply
 
 > Requires an AWS account with credentials configured, and an IAM user/role with sufficient permissions (see `docs/iam-policy.json` for the least-privilege policy used in this project).
 
+### CI/CD Setup
+
+This repo includes a GitHub Actions workflow (`.github/workflows/terraform.yml`) that runs `terraform plan` on pull requests targeting `terraform/**` and `terraform apply` on merges to `main`, using OIDC (no static AWS credentials stored in GitHub).
+
+To reuse this pipeline in your own fork, configure the following **repository secrets** (Settings → Secrets and variables → Actions):
+
+| Secret | Purpose |
+|---|---|
+| `AWS_ROLE_ARN` | ARN of the IAM role GitHub Actions assumes via OIDC. This role must be created **before** the pipeline can run — deploy the `github-oidc` Terraform module manually once (or via a bootstrap run with local credentials) to create it. |
+| `TFVARS_CONTENT` | Full contents of your `terraform.tfvars` file (see `terraform/environments/dev/terraform.tfvars.example`), pasted as a multi-line secret. The workflow writes it to disk at runtime via a heredoc, so no manual escaping is needed — just paste the file as-is. |
+| `TF_VAR_IAM_POLICY_NAME` | Name for the least-privilege IAM policy created by Terraform (see `docs/iam-policy.json`). |
+| `TFSTATE_BUCKET_NAME` | Name of the S3 bucket holding remote Terraform state (the `bootstrap` module's output). Used to configure the backend without hardcoding it in `.tf` files. |
+> ⚠️ The OIDC role (`AWS_ROLE_ARN`) is a chicken-and-egg dependency: it must exist before Actions can assume it, so it can't be created by the same pipeline it authenticates. Create it once via a local `terraform apply` of the `github-oidc` module, then switch to the pipeline for everything else.
+
 ### Cost Estimate
 
 Approximate costs assuming light, portfolio-level usage (a handful of short text files per day), all within the `eu-west-1` region. Actual costs will vary with usage volume and text length.
@@ -111,8 +133,8 @@ Approximate costs assuming light, portfolio-level usage (a handful of short text
 
 ### Roadmap
 
-- [ ] CI/CD with GitHub Actions (`terraform plan` on PR, `terraform apply` on merge to `main`)
-- [ ] Unit tests with `moto` for both Lambda handlers
+- [x] CI/CD with GitHub Actions (`terraform plan` on PR, `terraform apply` on merge to `main`)
+- [x] Unit tests with `moto` for both Lambda handlers
 - [ ] Demo GIF/video
 - [ ] Configurable tfstate bucket name (no manual `.tf` edits required to deploy)
 
@@ -166,6 +188,20 @@ terraform apply
 
 > Requiere una cuenta de AWS con credenciales configuradas, y un usuario/rol IAM con permisos suficientes (ver `docs/iam-policy.json` para la política de mínimo privilegio usada en este proyecto).
 
+### Configuración de CI/CD
+
+Este repo incluye un workflow de GitHub Actions (`.github/workflows/terraform.yml`) que ejecuta `terraform plan` en los pull requests que afecten a `terraform/**` y `terraform apply` al fusionar a `main`, usando OIDC (sin credenciales estáticas de AWS guardadas en GitHub).
+
+Para reutilizar este pipeline en tu propio fork, configura los siguientes **secrets del repositorio** (Settings → Secrets and variables → Actions):
+
+| Secret | Propósito |
+|---|---|
+| `AWS_ROLE_ARN` | ARN del rol IAM que GitHub Actions asume vía OIDC. Este rol debe existir **antes** de que el pipeline pueda correr — despliega el módulo Terraform `github-oidc` manualmente una vez (o con un `apply` inicial usando credenciales locales) para crearlo. |
+| `TFVARS_CONTENT` | Contenido completo de tu archivo `terraform.tfvars` (ver `terraform/environments/dev/terraform.tfvars.example`), pegado como secret multilínea. El workflow lo vuelca a disco en tiempo de ejecución con un heredoc, así que no hace falta escapar nada manualmente — pega el archivo tal cual. |
+| `TF_VAR_IAM_POLICY_NAME` | Nombre para la política IAM de mínimo privilegio que crea Terraform (ver `docs/iam-policy.json`). |
+| `TFSTATE_BUCKET_NAME` | Nombre del bucket S3 que guarda el state remoto de Terraform (el output del módulo `bootstrap`). Se usa para configurar el backend sin hardcodearlo en los `.tf`. |
+> ⚠️ El rol OIDC (`AWS_ROLE_ARN`) tiene una dependencia de huevo y gallina: debe existir antes de que Actions pueda asumirlo, así que no puede crearlo el propio pipeline al que autentica. Créalo una vez con un `terraform apply` local del módulo `github-oidc`, y a partir de ahí usa el pipeline para todo lo demás.
+
 ### Estimación de coste
 
 Coste aproximado asumiendo un uso ligero, de nivel portfolio (unos pocos archivos de texto cortos al día), todo dentro de la región `eu-west-1`. El coste real variará según el volumen de uso y la longitud de los textos.
@@ -183,7 +219,7 @@ Coste aproximado asumiendo un uso ligero, de nivel portfolio (unos pocos archivo
 
 ### Próximos pasos
 
-- [ ] CI/CD con GitHub Actions (`terraform plan` en PR, `terraform apply` al fusionar a `main`)
-- [ ] Tests unitarios con `moto` para ambos handlers de Lambda
+- [x] CI/CD con GitHub Actions (`terraform plan` en PR, `terraform apply` al fusionar a `main`)
+- [x] Tests unitarios con `moto` para ambos handlers de Lambda
 - [ ] GIF/vídeo de la demo
 - [ ] Nombre del bucket de tfstate configurable (sin necesidad de editar `.tf` manualmente para desplegar)
