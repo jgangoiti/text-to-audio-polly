@@ -32,19 +32,7 @@ The project was built as a portfolio piece to demonstrate asynchronous, event-dr
 
 ### Architecture
 
-```mermaid
-flowchart LR
-    A[User] -->|uploads .txt| B[(S3 - Input Bucket)]
-    B -->|S3 Event Trigger| C[Lambda: TTS Handler]
-    C -->|detect language| D[Amazon Comprehend]
-    D -->|language code| C
-    C -->|synthesize speech| E[Amazon Polly]
-    E -->|audio stream| C
-    C -->|store .mp3| F[(S3 - Output Bucket)]
-    C -->|publish message| G[Amazon SNS]
-    G -->|notify| H[Lambda: Notifier]
-    H -->|email with link| A
-```
+![Architecture diagram](docs/architecture.png)
 
 **Flow:**
 1. A `.txt` file is uploaded to the input S3 bucket.
@@ -52,7 +40,9 @@ flowchart LR
 3. The handler calls **Amazon Comprehend** to detect the dominant language of the text.
 4. Based on the detected language (with a fallback to Spanish if confidence is low or the language isn't supported), the handler selects a matching **Polly** voice and synthesizes the audio.
 5. The resulting MP3 is stored in the output S3 bucket.
-6. An **SNS** message triggers the **notifier Lambda**, which emails the user a link to the generated audio file.
+6. The upload to the output bucket triggers the **notifier Lambda**, which publishes to **SNS** and emails the user a link to the generated audio file.
+
+> Diagram generated with [mingrammer/diagrams](https://github.com/mingrammer/diagrams) — see `docs/diagram.py`. Regenerate with `python docs/diagram.py` after installing Graphviz and `pip install -r docs/requirements-diagram.txt`.
 
 ### Language Detection
 
@@ -158,7 +148,7 @@ El proyecto se construyó como pieza de portfolio para demostrar arquitecturas a
 
 ### Arquitectura
 
-Ver el diagrama en la sección en inglés más arriba (el flujo es idéntico).
+![Diagrama de arquitectura](docs/architecture.png)
 
 **Flujo:**
 1. Se sube un archivo `.txt` al bucket de entrada de S3.
@@ -166,7 +156,9 @@ Ver el diagrama en la sección en inglés más arriba (el flujo es idéntico).
 3. El handler llama a **Amazon Comprehend** para detectar el idioma dominante del texto.
 4. Según el idioma detectado (con fallback a español si la confianza es baja o el idioma no está soportado), el handler elige una voz de **Polly** acorde y sintetiza el audio.
 5. El MP3 resultante se guarda en el bucket de salida de S3.
-6. Un mensaje de **SNS** dispara la **Lambda notificadora**, que envía al usuario un correo con el enlace al audio generado.
+6. La subida al bucket de salida dispara la **Lambda notificadora**, que publica en **SNS** y envía al usuario un correo con el enlace al audio generado.
+
+> Diagrama generado con [mingrammer/diagrams](https://github.com/mingrammer/diagrams) — ver `docs/diagram.py`. Regenéralo con `python docs/diagram.py` tras instalar Graphviz y `pip install -r docs/requirements-diagram.txt`.
 
 ### Detección de idioma
 
