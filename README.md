@@ -129,15 +129,6 @@ Approximate costs assuming light, portfolio-level usage (a handful of short text
 
 > Note: this is an illustrative estimate, not a guarantee. Use the [AWS Pricing Calculator](https://calculator.aws) for a precise projection based on your expected volume.
 
-### Roadmap
-
-- [x] CI/CD with GitHub Actions (`terraform plan` on PR, `terraform apply` on merge to `main`)
-- [x] Unit tests with `moto` for both Lambda handlers
-- [ ] Demo GIF/video
-- [ ] Configurable tfstate bucket name (no manual `.tf` edits required to deploy)
-
----
-
 ## Español
 
 ### Descripción general
@@ -216,10 +207,3 @@ Coste aproximado asumiendo un uso ligero, de nivel portfolio (unos pocos archivo
 | **Total (uso ligero, dentro de la capa gratuita)** | | **≈ $0,00 – $1,00 / mes** |
 
 > Nota: esta es una estimación ilustrativa, no una garantía. Usa la [calculadora de precios de AWS](https://calculator.aws) para una proyección precisa según tu volumen esperado.
-
-### Próximos pasos
-
-- [x] CI/CD con GitHub Actions (`terraform plan` en PR, `terraform apply` al fusionar a `main`)
-- [x] Tests unitarios con `moto` para ambos handlers de Lambda
-- [ ] GIF/vídeo de la demo
-- [ ] Nombre del bucket de tfstate configurable (sin necesidad de editar `.tf` manualmente para desplegar)
