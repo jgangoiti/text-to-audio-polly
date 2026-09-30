@@ -8,9 +8,17 @@
 
 ## Demo
 
-![Demo](docs/demo.gif)
+**1. Upload the .txt file to the input bucket**
+![Step 1 - Upload](docs/demo/01-upload.png)
 
-<!-- TODO: grabar y enlazar aquí el GIF/vídeo de la demo -->
+**2. Lambda processes the file — language detection and audio synthesis**
+![Step 2 - CloudWatch](docs/demo/02-cloudwatch.png)
+
+**3. Email notification via SNS**
+![Step 3 - Email](docs/demo/03-email.png)
+
+**4. Audio file ready to play**
+![Step 4 - Audio](docs/demo/04-audio.png)
 
 ---
 
