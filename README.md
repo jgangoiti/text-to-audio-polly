@@ -1,6 +1,6 @@
 # text-to-audio-polly
 
-> ⚠️ **Demo language / Idioma de la demo:** The demo video below was recorded in Spanish, using Amazon Polly's "Lucia" voice. The pipeline itself is language-agnostic — see [Language Detection](#language-detection--detección-de-idioma).
+> **Demo language / Idioma de la demo:** The demo video below was recorded in Spanish, using Amazon Polly's "Lucia" voice. The pipeline itself is language-agnostic — see [Language Detection](#language-detection--detección-de-idioma).
 >
 > El vídeo de demostración está grabado en español, usando la voz "Lucía" de Amazon Polly. El pipeline en sí es independiente del idioma — ver [Detección de idioma](#language-detection--detección-de-idioma).
 
@@ -112,7 +112,7 @@ To reuse this pipeline in your own fork, configure the following **repository se
 | `TFVARS_CONTENT` | Full contents of your `terraform.tfvars` file (see `terraform/environments/dev/terraform.tfvars.example`), pasted as a multi-line secret. The workflow writes it to disk at runtime via a heredoc, so no manual escaping is needed — just paste the file as-is. |
 | `TF_VAR_IAM_POLICY_NAME` | Name for the least-privilege IAM policy created by Terraform (see `docs/iam-policy.json`). |
 | `TFSTATE_BUCKET_NAME` | Name of the S3 bucket holding remote Terraform state (the `bootstrap` module's output). Used to configure the backend without hardcoding it in `.tf` files. |
-> ⚠️ The OIDC role (`AWS_ROLE_ARN`) is a chicken-and-egg dependency: it must exist before Actions can assume it, so it can't be created by the same pipeline it authenticates. Create it once via a local `terraform apply` of the `github-oidc` module, then switch to the pipeline for everything else.
+> The OIDC role (`AWS_ROLE_ARN`) is a chicken-and-egg dependency: it must exist before Actions can assume it, so it can't be created by the same pipeline it authenticates. Create it once via a local `terraform apply` of the `github-oidc` module, then switch to the pipeline for everything else.
 
 ### Cost Estimate
 
@@ -191,7 +191,7 @@ Para reutilizar este pipeline en tu propio fork, configura los siguientes **secr
 | `TFVARS_CONTENT` | Contenido completo de tu archivo `terraform.tfvars` (ver `terraform/environments/dev/terraform.tfvars.example`), pegado como secret multilínea. El workflow lo vuelca a disco en tiempo de ejecución con un heredoc, así que no hace falta escapar nada manualmente — pega el archivo tal cual. |
 | `TF_VAR_IAM_POLICY_NAME` | Nombre para la política IAM de mínimo privilegio que crea Terraform (ver `docs/iam-policy.json`). |
 | `TFSTATE_BUCKET_NAME` | Nombre del bucket S3 que guarda el state remoto de Terraform (el output del módulo `bootstrap`). Se usa para configurar el backend sin hardcodearlo en los `.tf`. |
-> ⚠️ El rol OIDC (`AWS_ROLE_ARN`) tiene una dependencia de huevo y gallina: debe existir antes de que Actions pueda asumirlo, así que no puede crearlo el propio pipeline al que autentica. Créalo una vez con un `terraform apply` local del módulo `github-oidc`, y a partir de ahí usa el pipeline para todo lo demás.
+> El rol OIDC (`AWS_ROLE_ARN`) tiene una dependencia de huevo y gallina: debe existir antes de que Actions pueda asumirlo, así que no puede crearlo el propio pipeline al que autentica. Créalo una vez con un `terraform apply` local del módulo `github-oidc`, y a partir de ahí usa el pipeline para todo lo demás.
 
 ### Estimación de coste
 
